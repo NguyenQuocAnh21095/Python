@@ -54,7 +54,7 @@ else:
     b1 = b + '.'
     a1,b1 = edit_num(a,b1)
 
-print(a1,b1)
+#print(a1,b1)
 #Kiem tra n>=m:
 def ktsolon(n,m):
     for i in range(len(n)):
@@ -140,16 +140,14 @@ for i in range(0, kq.find('.') + 1, 1):
 if kq[0] == '-':
     kq = kq[0]+kq[k+1:]
 else:
-    kq = kq[k+1:]
+    kq = kq
 #Xoa so 0 phia sau '.'
-
 for i in range(len(kq)-1, kq.find('.') - 1, -1):
     if kq[i] == '.':
         kq = kq[0:i]
         break
     elif kq[i] == '0':
         kq = kq[0:i]
-        print(kq)
     else:
         kq = kq[:i+1]
         break

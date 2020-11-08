@@ -77,7 +77,6 @@ if du == 1:
 # Xu ly ket qua khi cuoi cung la . or 0
 
 for i in range(len(kq)-1, kq.find('.')-1, -1):
-    print(kq.find('.'))
     if kq[i] == '.':
         kq = kq[0:i]
         break
