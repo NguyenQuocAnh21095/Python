@@ -1,5 +1,6 @@
 # phep nhan 2 so
-tinh = input('Nhap vao phep tinh nhan:')
+#tinh = input('Nhap vao phep tinh nhan:')
+tinh = '-00123.3000*4'
 ## Check input
 #isdigit()
 
@@ -136,4 +137,50 @@ for i in range(len(kq)-1, kq.find('.') - 1, -1):
         kq = kq[:i+1]
         break
 
+def xuly0phai(m):
+    if m.find('.') != -1:
+        for i in range (len(m) - 1, m.find('.') - 1, -1):
+            if m[i] != '0':
+                kq = m[:i+1]
+                break
+            elif m[i] == '0':
+                kq = m[:i]
+    else:
+        kq = m
+    if kq[len(kq)-1] == '.':
+        kq = kq[:len(kq)-1]
+    return kq
+
+def xuly0trai(m):
+    m = m[::-1]
+    if m[len(m)-1] == '-':
+        dau = '-'
+        m = m[:len(m)-1]
+    else:
+        dau = ''
+        m = m
+
+    if m.find('.') != -1:
+        for i in range (len(m) - 1, m.find('.') - 1, -1):
+            if m[i] != '0':
+                kq = m[:i+1]
+                break
+            elif m[i] == '0':
+                kq = m[:i]
+        if kq[len(kq)-1] == '.':
+            kq = kq + '0'
+    else:
+        for i in range (len(m) - 1, m.find('.') - 1, -1):
+            if m[i] != '0':
+                kq = m[:i+1]
+                break
+            elif m[i] == '0':
+                kq = m[:i]
+    kq = dau + kq[::-1]
+    return kq
+
+# print('xu ly so 0:',xuly0phai('231'))
+# print('xu ly so 0:',xuly0trai('-10.0'))
+kq = xuly0phai(kq)
+kq = xuly0trai(kq)
 print('Ket qua phep nhan',tinh,'la:', kq)
