@@ -1,5 +1,5 @@
 # phep nhan 2 so
-tinh = input('Nhap vao phep tinh nhan:')
+tinh = input('Nhap vao phep tinh nhan: ')
 ## Check input
 #isdigit()
 
