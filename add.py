@@ -1,5 +1,5 @@
 #adding 2 large number
-tinh = input('Nhap vao phep tinh tong:')
+tinh = input('Nhap vao phep tinh tong: ')
 
 ## Check input
 #isdigit()
@@ -74,14 +74,50 @@ for i in range (len(a1)-1,-1,-1):
 if du == 1:
     kq = '1' + kq
 
-# Xu ly ket qua khi cuoi cung la . or 0
-
-for i in range(len(kq)-1, kq.find('.')-1, -1):
-    if kq[i] == '.':
-        kq = kq[0:i]
-        break
+#xóa số 0 bên phải
+def xuly0phai(m):
+    if m.find('.') != -1:
+        for i in range (len(m) - 1, m.find('.') - 1, -1):
+            if m[i] != '0':
+                kq = m[:i+1]
+                break
+            elif m[i] == '0':
+                kq = m[:i]
     else:
-        if kq[i] == '0':
-            kq = kq[0:i]
+        kq = m
+    if kq[len(kq)-1] == '.':
+        kq = kq[:len(kq)-1]
+    return kq
 
+#Xóa số 0 bên trái
+def xuly0trai(m):
+    m = m[::-1]
+    if m[len(m)-1] == '-':
+        dau = '-'
+        m = m[:len(m)-1]
+    else:
+        dau = ''
+        m = m
+
+    if m.find('.') != -1:
+        for i in range (len(m) - 1, m.find('.') - 1, -1):
+            if m[i] != '0':
+                kq = m[:i+1]
+                break
+            elif m[i] == '0':
+                kq = m[:i]
+        if kq[len(kq)-1] == '.':
+            kq = kq + '0'
+    else:
+        for i in range (len(m) - 1, m.find('.') - 1, -1):
+            if m[i] != '0':
+                kq = m[:i+1]
+                break
+            elif m[i] == '0':
+                kq = m[:i]
+    kq = dau + kq[::-1]
+    return kq
+
+kq = xuly0phai(kq)
+kq = xuly0trai(kq)
 print('Ket qua cua pheo tinh ' + tinh + ' = ',kq)

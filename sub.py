@@ -1,5 +1,5 @@
 ##Subtract 2 larg numbers:
-tinh = input('Nhap phep tinh hieu:')
+tinh = input('Nhap phep tinh hieu: ')
 #tinh = '55.555-444.33'
 
 #Tach hai so
@@ -122,34 +122,55 @@ else:
             kq = str(tam) + kq
             muon = 1
     kq = '-' + kq
-print(kq)
-## Xoa so 0 phia truoc '.'
-k = 0
-for i in range(0, kq.find('.') + 1, 1):
-    if kq[i] == '-':
-        continue
-    elif kq[i] == '0':
-        if kq[i+1] == '0':
-            k = i+1
-        elif kq[i+1] == '.':
-            k = i-1
-        else:
-            break
+#print(kq)
+
+#Xóa số 0 bên phải
+def xuly0phai(m):
+    if m.find('.') != -1:
+        for i in range (len(m) - 1, m.find('.') - 1, -1):
+            if m[i] != '0':
+                kq = m[:i+1]
+                break
+            elif m[i] == '0':
+                kq = m[:i]
     else:
-        break
-if kq[0] == '-':
-    kq = kq[0]+kq[k+1:]
-else:
-    kq = kq
-#Xoa so 0 phia sau '.'
-for i in range(len(kq)-1, kq.find('.') - 1, -1):
-    if kq[i] == '.':
-        kq = kq[0:i]
-        break
-    elif kq[i] == '0':
-        kq = kq[0:i]
+        kq = m
+    if kq[len(kq)-1] == '.':
+        kq = kq[:len(kq)-1]
+    return kq
+
+#Xóa số 0 bên trái
+def xuly0trai(m):
+    m = m[::-1]
+    if m[len(m)-1] == '-':
+        dau = '-'
+        m = m[:len(m)-1]
     else:
-        kq = kq[:i+1]
-        break
+        dau = ''
+        m = m
+
+    if m.find('.') != -1:
+        for i in range (len(m) - 1, m.find('.') - 1, -1):
+            if m[i] != '0':
+                kq = m[:i+1]
+                break
+            elif m[i] == '0':
+                kq = m[:i]
+        if kq[len(kq)-1] == '.':
+            kq = kq + '0'
+    else:
+        for i in range (len(m) - 1, m.find('.') - 1, -1):
+            if m[i] != '0':
+                kq = m[:i+1]
+                break
+            elif m[i] == '0':
+                kq = m[:i]
+    kq = dau + kq[::-1]
+    return kq
+
+# print('xu ly so 0:',xuly0phai('231'))
+# print('xu ly so 0:',xuly0trai('-10.0'))
+kq = xuly0phai(kq)
+kq = xuly0trai(kq)
 
 print('Hieu cua phep tinh:',tinh,'=',kq)
