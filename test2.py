@@ -1,27 +1,40 @@
-from enum import Enum
-class A():
-    __abc = 1
-    xyz = 2
-    def __init__(self, name, age = None):
-        self.BType = BatteryType
+class Batterty():
+    def __init__(self, Binfo):
+        self.Binfo = Binfo
 
-    def printB(self):
-        print(self.BType.Li_Ion)
+    def __str__(self):
+        return f"battery info: {self.Binfo} "
 
-    # def __str__()
-    def set_abc(self, abc):
-        self.__abc = abc
+class Display():
+    def __init__(self, Dinfo):
+            self.Dinfo = Dinfo
 
-    def print_abc(self):
-        print(self.__abc)
+    def __str__(self):
+        return f"display info: {self.Dinfo} "
 
-class BatteryType(Enum):
-    # Li-Ion, NiMH, NiCd
-    Li_Ion = "lili"
-    NiMH = 2
-    NiCd = 3
+class GSM(Batterty, Display):
+    def __init__(self, GMSname, Binfo, Dinfo):
+        self.GMSname = GMSname
+        Batterty.__init__(self, Binfo)
+        Display.__init__(self, Dinfo)
 
-a = A("Nam")
-a.print_abc()
-a.set_abc(5)
-print(a.print_abc())
+    def __str__(self):
+    #     # return f"GSM info: {self.nameg} " + Batterty.__str__(self) + Display.__str__(self)
+        return f"GSM info: {self.GMSname} " + " ".join(map(str, [parent.__str__(self) for parent in GSM.__bases__]))   
+    #     for parent in GSM.__bases__(self):
+    #         print(parent)
+
+
+item_array = {
+    "iphone": ["7S", "Lion", "5.5"],
+    "android": ["Note7", "ABC", "6"]
+}
+
+GSM_instances = []
+
+for item in item_array:
+    x = GSM(item_array[item][0],item_array[item][1], item_array[item][2])
+    GSM_instances.append(x)
+
+for item in GSM_instances:
+    print(item)
