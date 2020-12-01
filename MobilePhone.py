@@ -1,18 +1,49 @@
 from enum import Enum
 
-class Gsm:
+#battery characteristics (model, hours idle and hours talk)
+class Battery:
+
+    def __init__(self, model=None, hours_idle=None, hours_talk=None, type_bat=1):
+        self.__model = model
+        self.__hours_idle = hours_idle
+        self.__hours_talk = hours_talk
+        self.__type_bat = type_bat
+
+    def battery_type(self):
+        __battyp = BatteryType
+        return 'Battery type: %s\n' %__battyp(self.__type_bat)
+
+    def __str__(self):
+        return 'Battery information.\nBattery model: {}\nHours idle: {}\nHours talk: {}\n'.format(self.__model,\
+            self.__hours_idle, self.__hours_talk) + self.battery_type()
+
+#display characteristics (size and number of colors)
+class Display:
+
+    def __init__(self, size=None, nums_color=None):
+        self.__size = size
+        self.__nums_color = nums_color
+
+    def __str__(self):
+        return "Display characteristics.\nDisplay size: {}\nNumbers of color: {}\n".format(self.__size, self.__nums_color)
+
+#Gsm class
+class Gsm(Display,Battery):
     
     CallHistory = []
 
-    def __init__(self, model, manufacturer, price=None, owner=None):
+    def __init__(self, model, manufacturer, price=None, owner=None, model_bat=None, hours_idle=None, hours_talk=None, type_bat=1, size=None, nums_color=None):
         self.__model = model
         self.__manufacturer = manufacturer
         self.__price = price
         self.__owner = owner
+        Battery.__init__(self, model, hours_idle, hours_talk, type_bat)
+        Display.__init__(self, size, nums_color)
+
 
     def __str__(self):
         return 'Mobile information.\nModel: {}\nManufacturer: {}\nPrice: {}\nOwner: {}\n'\
-            .format(self.__model, self.__manufacturer,self.__price,self.__owner)    
+            .format(self.__model, self.__manufacturer,self.__price,self.__owner) +'\n' + Battery.__str__(self) + '\n' + Display.__str__(self)
 
 #add history        
     def add_history(self,date,time,num,dur):
@@ -34,31 +65,7 @@ class Gsm:
             price = price + his.duration/60*ppm
         return price
 
-#battery characteristics (model, hours idle and hours talk)
-class Battery:
 
-    def __init__(self, model=None, hours_idle=None, hours_talk=None):
-        self.__model = model
-        self.__hours_idle = hours_idle
-        self.__hours_talk = hours_talk
-
-    def battery_type(self, type):
-        __battyp = BatteryType
-        return 'Battery type: %s' %__battyp(type)
-    
-    def __str__(self):
-        return 'Battery information.\nBattery model: {}\nHours idle: {}\nHours talk: {}\n'.format(self.__model,\
-            self.__hours_idle, self.__hours_talk)
-
-#display characteristics (size and number of colors)
-class Display:
-
-    def __init__(self, size=None, nums_color=None):
-        self.__size = size
-        self.__nums_color = nums_color
-
-    def __str__(self):
-        return "Display characteristics.\nDisplay size {}\nNumbers of color: {}\n".format(self.__size, self.__nums_color)
 
 #Add an enumeration BatteryType (Li-Ion, NiMH, NiCd, …)
 class BatteryType(Enum):
@@ -66,28 +73,32 @@ class BatteryType(Enum):
             NiMH = 2
             NiCd = 3
 
+#Write a class GSMTest to test the GSM class: 
 class GsmTest:
     
     gsm_list = []
 
 #Create an array of few instances of the GSM class
-    # def create_gsms(self):
-    #     n = int(input('Numbers of gsm:'))
-    #     for i in range (n):
-    #         model = input('Model name of gsm %d:' % i)
-    #         manufacturer = input('Manufacturer of gsm %d:' % i)
-    #         price = input('Price of gsm %d:' % i)
-    #         owner = input('Owner of gsm %d:' % i)
-    #         self.gsm_list.append(Gsm(model,manufacturer,price,owner))
+    def create_gsms(self):
+        n = int(input('Numbers of gsm:'))
+        for i in range (n):
+            model = input('Model name of gsm %d:' % i)
+            manufacturer = input('Manufacturer of gsm %d:' % i)
+            price = input('Price of gsm %d:' % i)
+            owner = input('Owner of gsm %d:' % i)
 
-    #         bat_model = input('Battery name of gsm %d:' % i)
-    #         hours_idle = input('Hours idle of battery of gsm %d:' % i)
-    #         hours_talk = input('Hours talk of battery of gsm %d:' % i)
-    #         self.gsm_list[i].Battery(bat_model,hours_idle,hours_talk)
+            bat_model = input('Battery name of gsm %d:' % i)
+            hours_idle = input('Hours idle of battery of gsm %d:' % i)
+            hours_talk = input('Hours talk of battery of gsm %d:' % i)
 
-    #         bat_type = int(input('Battery type of gsm %d:' % i))
-    #         self.gsm_list[i].Battery().battery_type(bat_type)
-    #         self.gsm_list.append(Gsm(model,manufacturer,price,owner).Battery(bat_model,hours_idle,hours_talk).battery_type(bat_type))
+            bat_type = int(input('Battery type of gsm %d:' % i))
+            size = input('Display size of gsm %d:' % i)
+            nums_color = input('Numbers of color of gsm %d:' % i)
+            self.gsm_list.append(Gsm(model,manufacturer,price,owner,bat_model,hours_idle,hours_talk,bat_type,size,nums_color))
+
+    def display_gsms(self):
+        for i in range(len(self.gsm_list)):
+            print('Information of GSM %d\n' % i, self.gsm_list[i])
 
 #Display the information about the GSMs in the array.
  
@@ -106,20 +117,43 @@ class Call:
         return 'Date: {}\nTime: {}\nDialed number: {}\nDuration: {}\n'\
             .format(self.date,self.time,self.dialed_num,self.duration)
 
-# nokia = Gsm('1250','China')
-# nokia.Battery('5000mAh')
-# nokia.add_history('26/11','3:20','09321',50)
-# nokia.add_history('27/11','3:20','09321',50)
-# nokia.add_history('28/11','3:20','09321',50)
-# nokia.add_history('29/11','3:20','09321',50)
-# nokia.delete_history(0) 
-# print(nokia.total_price(3))
-# print(nokia.CallHistory[0].duration)
-# for entry in nokia.CallHistory:
-#     print(entry)
-# print(len(nokia.CallHistory))
-# gsmlist = GsmTest('nokia','samsung','iphone')
-# print(gsmlist.gsm_list())
-# print(nokia.Display('5000mAh'))
-# a= Gsm.Battery().battery_type(2).name
-# print(a)
+
+#Display static iphone 4s
+# iphone4s = GsmTest()
+# iphone4s.create_gsms()
+# iphone4s.display_gsms()
+
+#Write a class GSMCallHistoryTest to test the call history functionality of the GSM class.
+class GSMCallHistoryTest:
+
+#Create an instance of the GSM class.
+    def create_ins_gsm(self):
+        model = input('Model name of gsm: ')
+        manufacturer = input('Manufacturer of gsm: ' )
+        price = input('Price of gsm: ')
+        owner = input('Owner of gsm: ' )
+
+        bat_model = input('Battery name of gsm: ')
+        hours_idle = input('Hours idle of battery of gsm: ')
+        hours_talk = input('Hours talk of battery of gsm: ')
+
+        bat_type = int(input('Battery type of gsm: '))
+        size = input('Display size of gsm: ')
+        nums_color = input('Numbers of color of gsm: ')
+        return Gsm(model,manufacturer,price,owner,bat_model,hours_idle,hours_talk,bat_type,size,nums_color)
+
+#Add few calls.
+    def add_few_calls(self):
+        n = int(input('Number of calls: '))
+        calls_list = []
+        for i in range(n):
+            print('Information of call %d' % i)
+            date = input('Date of call: ')
+            time = input('Time of call: ')
+            dialed_num = input('Dialed number phone: ')
+            duration = int(input('Duration of call in seconds: '))
+            calls_list.append(Call(date, time, dialed_num, duration))
+        return calls_list
+
+a = GSMCallHistoryTest().add_few_calls()
+print(a)
