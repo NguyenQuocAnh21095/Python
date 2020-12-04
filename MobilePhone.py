@@ -91,10 +91,11 @@ class GsmTest:
             hours_idle = input('Hours idle of battery of gsm %d:' % i)
             hours_talk = input('Hours talk of battery of gsm %d:' % i)
 
-            bat_type = int(input('Battery type of gsm %d:' % i))
+            bat_type = int(input('Battery type of gsm %d (input 1->3):' % i))
             size = input('Display size of gsm %d:' % i)
             nums_color = input('Numbers of color of gsm %d:' % i)
             self.gsm_list.append(Gsm(model,manufacturer,price,owner,bat_model,hours_idle,hours_talk,bat_type,size,nums_color))
+        return self.gsm_list
 
     def display_gsms(self):
         for i in range(len(self.gsm_list)):
@@ -118,13 +119,10 @@ class Call:
             .format(self.date,self.time,self.dialed_num,self.duration)
 
 
-#Display static iphone 4s
-# iphone4s = GsmTest()
-# iphone4s.create_gsms()
-# iphone4s.display_gsms()
-
 #Write a class GSMCallHistoryTest to test the call history functionality of the GSM class.
 class GSMCallHistoryTest:
+    calls_list = []
+    ins_gsm = None
 
 #Create an instance of the GSM class.
     def create_ins_gsm(self):
@@ -137,23 +135,45 @@ class GSMCallHistoryTest:
         hours_idle = input('Hours idle of battery of gsm: ')
         hours_talk = input('Hours talk of battery of gsm: ')
 
-        bat_type = int(input('Battery type of gsm: '))
+        bat_type = int(input('Battery type of gsm (type 1->3): '))
         size = input('Display size of gsm: ')
         nums_color = input('Numbers of color of gsm: ')
-        return Gsm(model,manufacturer,price,owner,bat_model,hours_idle,hours_talk,bat_type,size,nums_color)
+        self.ins_gsm = Gsm(model,manufacturer,price,owner,bat_model,hours_idle,hours_talk,bat_type,size,nums_color)
+        return self.ins_gsm
 
 #Add few calls.
     def add_few_calls(self):
         n = int(input('Number of calls: '))
-        calls_list = []
         for i in range(n):
             print('Information of call %d' % i)
-            date = input('Date of call: ')
-            time = input('Time of call: ')
-            dialed_num = input('Dialed number phone: ')
-            duration = int(input('Duration of call in seconds: '))
-            calls_list.append(Call(date, time, dialed_num, duration))
-        return calls_list
+            date = input('Date of call %d:' %i)
+            time = input('Time of call %d:' %i)
+            dialed_num = input('Dialed number phone %d:' %i)
+            duration = int(input('Duration of call in seconds %d:' %i))
+            self.ins_gsm.add_history(date, time, dialed_num, duration)
+        print(self.ins_gsm.CallHistory.__str__())
+        return self.ins_gsm.CallHistory
 
-a = GSMCallHistoryTest().add_few_calls()
-print(a)
+    # def display_infor_call(self):
+    #     for i in range(len(self.calls_list)):
+    #         print('Infor of the call %d' %i, self.calls_list[i])
+
+
+
+
+# gsm_list_test = GsmTest()
+# gsm_list_test.create_gsms()
+# gsm_list_test.display_gsms()
+# print(gsm_list_test.gsm_list)
+
+#Display static iphone 4s
+# print('Input iphone 4s infor')
+# iphone4s = GsmTest()
+# iphone4s.create_gsms()
+# iphone4s.display_gsms()
+xyz = GSMCallHistoryTest()
+xyz.create_ins_gsm()
+xyz.add_few_calls()
+
+# call_entries.display_infor_call()
+# print(a)
