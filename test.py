@@ -1,9 +1,6 @@
-class num:
-    def so(self):
-        a = 32
-        return a
-number = num().so()
-if number > 3:
-    print('test ok')
+a = int(input())
+
+if a == None:
+    print('True')
 else:
-    print('test fail')
+    print('False')

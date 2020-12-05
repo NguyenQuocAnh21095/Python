@@ -25,7 +25,7 @@ class Display:
         self.__nums_color = nums_color
 
     def __str__(self):
-        return "Display characteristics.\nDisplay size: {}\nNumbers of color: {}\n".format(self.__size, self.__nums_color)
+        return "Display characteristics\nDisplay size: {}\nNumbers of color: {}\n".format(self.__size, self.__nums_color)
 
 #Gsm class
 class Gsm(Display,Battery):
@@ -82,24 +82,34 @@ class GsmTest:
     def create_gsms(self):
         n = int(input('Numbers of gsm:'))
         for i in range (n):
-            model = input('Model name of gsm %d:' % i)
-            manufacturer = input('Manufacturer of gsm %d:' % i)
-            price = input('Price of gsm %d:' % i)
-            owner = input('Owner of gsm %d:' % i)
+            while True:
+                model = input('Model name of gsm %d:' % (i+1))
+                if model != '':
+                    break
+            while True:
+                manufacturer = input('Manufacturer of gsm %d:' % (i+1))
+                if manufacturer !='':
+                    break
+            price = input('Price of gsm %d:' % (i+1))
+            owner = input('Owner of gsm %d:' % (i+1))
 
-            bat_model = input('Battery name of gsm %d:' % i)
-            hours_idle = input('Hours idle of battery of gsm %d:' % i)
-            hours_talk = input('Hours talk of battery of gsm %d:' % i)
+            bat_model = input('Battery name of gsm %d:' % (i+1))
+            hours_idle = input('Hours idle of battery of gsm %d:' % (i+1))
+            hours_talk = input('Hours talk of battery of gsm %d:' % (i+1))
 
-            bat_type = int(input('Battery type of gsm %d (input 1->3):' % i))
-            size = input('Display size of gsm %d:' % i)
-            nums_color = input('Numbers of color of gsm %d:' % i)
+            while True:
+                bat_type_buff = input('Battery type of gsm %d (input 1->3):' % (i+1))
+                if bat_type_buff != '':
+                    bat_type = int(bat_type_buff)    
+                    break
+            size = input('Display size of gsm %d:' % (i+1))
+            nums_color = input('Numbers of color of gsm %d:' % (i+1))
             self.gsm_list.append(Gsm(model,manufacturer,price,owner,bat_model,hours_idle,hours_talk,bat_type,size,nums_color))
         return self.gsm_list
 
     def display_gsms(self):
         for i in range(len(self.gsm_list)):
-            print('Information of GSM %d\n' % i, self.gsm_list[i])
+            print('Information of GSM %d\n' % (i+1), self.gsm_list[i])
 
 #Display the information about the GSMs in the array.
  
@@ -145,17 +155,17 @@ class GSMCallHistoryTest:
     def add_few_calls_test(self):
         n = int(input('\nNumber of calls: '))
         for i in range(n):
-            print('Information of call %d' % i)
-            date = input('Date of call %d:' %i)
-            time = input('Time of call %d:' %i)
-            dialed_num = input('Dialed number phone %d:' %i)
-            duration = int(input('Duration of call in seconds %d:' %i))
+            print('Information of call %d' % (i+1))
+            date = input('Date of call %d:' % (i+1))
+            time = input('Time of call %d:' % (i+1))
+            dialed_num = input('Dialed number phone %d:' % (i+1))
+            duration = int(input('Duration of call in seconds %d:' % (i+1)))
             self.ins_gsm.add_history(date, time, dialed_num, duration)
         return self.ins_gsm.CallHistory
 
     def display_infor_call_test(self):
         for i in range(len(self.ins_gsm.CallHistory)):
-            print('\nInfor of the call %d\n' %i, self.ins_gsm.CallHistory[i])
+            print('\nInfor of the call %d\n' % (i+1), self.ins_gsm.CallHistory[i])
 
     def cacul_price_test(self,price_per):
         price = self.ins_gsm.total_price(price_per)
@@ -177,10 +187,9 @@ class GSMCallHistoryTest:
         
 
 #This component for testing 'class GSM'
-# gsm_list_test = GsmTest()
-# gsm_list_test.create_gsms()
-# gsm_list_test.display_gsms()
-# print(gsm_list_test.gsm_list)
+gsm_list_test = GsmTest()
+gsm_list_test.create_gsms()
+gsm_list_test.display_gsms()
 
 # This component for testing 'Display static iphone 4s'
 # print('Input iphone 4s infor')
