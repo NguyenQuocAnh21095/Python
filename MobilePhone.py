@@ -125,7 +125,7 @@ class GSMCallHistoryTest:
     ins_gsm = None
 
 #Create an instance of the GSM class.
-    def create_ins_gsm(self):
+    def create_ins_gsm_test(self):
         model = input('Model name of gsm: ')
         manufacturer = input('Manufacturer of gsm: ' )
         price = input('Price of gsm: ')
@@ -142,8 +142,8 @@ class GSMCallHistoryTest:
         return self.ins_gsm
 
 #Add few calls.
-    def add_few_calls(self):
-        n = int(input('Number of calls: '))
+    def add_few_calls_test(self):
+        n = int(input('\nNumber of calls: '))
         for i in range(n):
             print('Information of call %d' % i)
             date = input('Date of call %d:' %i)
@@ -151,29 +151,55 @@ class GSMCallHistoryTest:
             dialed_num = input('Dialed number phone %d:' %i)
             duration = int(input('Duration of call in seconds %d:' %i))
             self.ins_gsm.add_history(date, time, dialed_num, duration)
-        print(self.ins_gsm.CallHistory.__str__())
         return self.ins_gsm.CallHistory
 
-    # def display_infor_call(self):
-    #     for i in range(len(self.calls_list)):
-    #         print('Infor of the call %d' %i, self.calls_list[i])
+    def display_infor_call_test(self):
+        for i in range(len(self.ins_gsm.CallHistory)):
+            print('\nInfor of the call %d\n' %i, self.ins_gsm.CallHistory[i])
 
+    def cacul_price_test(self,price_per):
+        price = self.ins_gsm.total_price(price_per)
+        return 'Total price %.2f $' %price
+    
+    def remove_longest_call_test(self):
+        max_dur = 0
+        max_pos = 0
 
+        for i in range(len(self.ins_gsm.CallHistory)):
+            if self.ins_gsm.CallHistory[i].duration > max_dur:
+                max_dur = self.ins_gsm.CallHistory[i].duration
+                max_pos = i
+        self.ins_gsm.delete_history(max_pos)
 
+    def clear_call_history_test(self):
+        self.ins_gsm.clear_history()
+        print('Call history has cleared')
+        
 
+#This component for testing 'class GSM'
 # gsm_list_test = GsmTest()
 # gsm_list_test.create_gsms()
 # gsm_list_test.display_gsms()
 # print(gsm_list_test.gsm_list)
 
-#Display static iphone 4s
+# This component for testing 'Display static iphone 4s'
 # print('Input iphone 4s infor')
 # iphone4s = GsmTest()
 # iphone4s.create_gsms()
 # iphone4s.display_gsms()
-xyz = GSMCallHistoryTest()
-xyz.create_ins_gsm()
-xyz.add_few_calls()
 
-# call_entries.display_infor_call()
-# print(a)
+# This component for testing 'class GSMCallHistoryTest'
+# xyz = GSMCallHistoryTest()
+# xyz.create_ins_gsm_test()
+# xyz.add_few_calls_test()
+# xyz.display_infor_call_test()
+
+# print(xyz.cacul_price_test(0.37))
+# xyz.remove_longest_call_test()
+# print('Price after deleting longest call\n',xyz.cacul_price_test(0.37))
+
+# print('\n Call history after delete longest call')
+# xyz.display_infor_call_test()
+# xyz.clear_call_history_test()
+# print('\n Call history after clear')
+# xyz.display_infor_call_test()
