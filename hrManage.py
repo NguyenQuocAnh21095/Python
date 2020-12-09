@@ -1,16 +1,16 @@
 class Human:
     def __init__(self, f_name, l_name):
-        self.__firstname = f_name
-        self.__lastname = l_name
+        self.firstname = f_name
+        self.lastname = l_name
 
 class Student(Human):
 
     def __init__(self, f_name, l_name, grade):
-        self.__grade = grade
+        self.grade = grade
         Human.__init__(self, f_name, l_name)
 
     def __str__(self):
-        pass
+        return 'Student {} {} grade is {}'.format(self.firstname, self.lastname, self.grade)
 
 class Worker(Human):
 
@@ -20,8 +20,10 @@ class Worker(Human):
         Human.__init__(self, f_name, l_name)
 
     def money_per_hour(self):
-        self.mph = self.__week_salary / self.__week_salary / 7
-        return 'Money per hour: ',self.mph
+        self.mph = self.__week_salary / self.__hours_per_day / 7
+        return self.mph
+    def __str__(self):
+        return 'Worker {} {} money per hour is {}'.format(self.firstname, self.lastname, self.money_per_hour())
 
 stu_l = [
     ['Anh','Nguyen',10],
@@ -53,4 +55,36 @@ student_obj = []
 for i in range(10):
     student_obj.append(Student(stu_l[i][0], stu_l[i][1], stu_l[i][2]))
 
-print(student_obj)
+#print(student_obj)
+def sort_list_asc(a):
+    for i in range (len(a)-1):
+        for j in range (len(a)-1):
+            if a[j].grade > a[j+1].grade:
+                a[j], a[j+1] = a[j+1], a[j]
+    return a
+
+#print(sort_list_asc(student_obj))
+
+def sort_list_desc(a):
+    for i in range (len(a)-1):
+        for j in range (len(a)-1):
+            if a[j].money_per_hour() < a[j+1].money_per_hour():
+                a[j], a[j+1] = a[j+1], a[j]
+    return a
+
+worker_obj = []
+
+for i in range(10):
+    worker_obj.append(Worker(wor_l[i][0], wor_l[i][1], wor_l[i][2], wor_l[i][3]))
+
+for i in range(10):
+    print(worker_obj[i])
+
+print('\n')
+worker_obj2 = sort_list_desc(worker_obj)
+for i in range(10):
+    print(worker_obj2[i])
+# abc = Worker(wor_l[0][0], wor_l[0][1], wor_l[0][2], wor_l[0][3])
+# print(abc)
+# xyz = Student(stu_l[0][0], stu_l[0][1], stu_l[0][2])
+# print(xyz)
