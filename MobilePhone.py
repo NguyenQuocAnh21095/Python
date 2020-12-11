@@ -154,23 +154,25 @@ class GSMCallHistoryTest:
         print(self.ins_gsm.CallHistory.__str__())
         return self.ins_gsm.CallHistory
 
-    # def display_infor_call(self):
-    #     for i in range(len(self.calls_list)):
-    #         print('Infor of the call %d' %i, self.calls_list[i])
+    def display_infor_call(self):
+        for i in range(len(self.calls_list)):
+            print('Infor of the call %d' %i, self.calls_list[i])
 
 
 
-
-# gsm_list_test = GsmTest()
-# gsm_list_test.create_gsms()
-# gsm_list_test.display_gsms()
-# print(gsm_list_test.gsm_list)
+# GSMtest class
+gsm_list_test = GsmTest()
+gsm_list_test.create_gsms()
+gsm_list_test.display_gsms()
+print(gsm_list_test.gsm_list)
 
 #Display static iphone 4s
-# print('Input iphone 4s infor')
-# iphone4s = GsmTest()
-# iphone4s.create_gsms()
-# iphone4s.display_gsms()
+print('Input iphone 4s infor')
+iphone4s = GsmTest()
+iphone4s.create_gsms()
+iphone4s.display_gsms()
+
+# GSMcall history test
 xyz = GSMCallHistoryTest()
 xyz.create_ins_gsm()
 xyz.add_few_calls()

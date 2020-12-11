@@ -23,7 +23,37 @@ class Worker(Human):
         self.mph = self.__week_salary / self.__hours_per_day / 7
         return self.mph
     def __str__(self):
-        return 'Worker {} {} money per hour is {}'.format(self.firstname, self.lastname, self.money_per_hour())
+        return 'Worker {} {} money per hour is {:.3f}'.format(self.firstname, self.lastname, self.money_per_hour())
+
+
+# Sort student's grade as ascending
+def sort_list_asc(a):
+    for i in range (len(a)-1):
+        for j in range (len(a)-1):
+            if a[j].grade > a[j+1].grade:
+                a[j], a[j+1] = a[j+1], a[j]
+    return a
+
+#print(sort_list_asc(student_obj))
+
+# Sort worker's money per hour as descending
+def sort_list_desc(a):
+    for i in range (len(a)-1):
+        for j in range (len(a)-1):
+            if a[j].money_per_hour() < a[j+1].money_per_hour():
+                a[j], a[j+1] = a[j+1], a[j]
+    return a
+
+# Sort merge list follow firstname, lastname as ascending
+def sort_merge_asc(a):
+    for i in range (len(a)-1):
+        for j in range (len(a)-1):
+            if a[j].firstname.lower() > a[j+1].firstname.lower():
+                a[j], a[j+1] = a[j+1], a[j]
+            elif a[j].firstname.lower() == a[j+1].firstname.lower():
+                if a[j].lastname.lower() > a[j+1].lastname.lower():
+                    a[j], a[j+1] = a[j+1], a[j]
+    return a
 
 stu_l = [
     ['Anh','Nguyen',10],
@@ -50,41 +80,47 @@ wor_l = [
     ['Them','Doan', 1200, 9.5],
     ['Cong','Nguyen',1300, 10.5]
 ]
-
-student_obj = []
-for i in range(10):
-    student_obj.append(Student(stu_l[i][0], stu_l[i][1], stu_l[i][2]))
-
-#print(student_obj)
-def sort_list_asc(a):
-    for i in range (len(a)-1):
-        for j in range (len(a)-1):
-            if a[j].grade > a[j+1].grade:
-                a[j], a[j+1] = a[j+1], a[j]
-    return a
-
-#print(sort_list_asc(student_obj))
-
-def sort_list_desc(a):
-    for i in range (len(a)-1):
-        for j in range (len(a)-1):
-            if a[j].money_per_hour() < a[j+1].money_per_hour():
-                a[j], a[j+1] = a[j+1], a[j]
-    return a
-
+# Create object workers
 worker_obj = []
-
-for i in range(10):
+for i in range(len(stu_l)):
     worker_obj.append(Worker(wor_l[i][0], wor_l[i][1], wor_l[i][2], wor_l[i][3]))
 
-for i in range(10):
-    print(worker_obj[i])
+# Create object students
+student_obj = []
+for i in range(len(wor_l)):
+    student_obj.append(Student(stu_l[i][0], stu_l[i][1], stu_l[i][2]))
 
-print('\n')
-worker_obj2 = sort_list_desc(worker_obj)
-for i in range(10):
-    print(worker_obj2[i])
-# abc = Worker(wor_l[0][0], wor_l[0][1], wor_l[0][2], wor_l[0][3])
-# print(abc)
-# xyz = Student(stu_l[0][0], stu_l[0][1], stu_l[0][2])
-# print(xyz)
+
+print('\nStudent list sort by grade ascending\n')
+# Display student after sort
+student_obj_sort = sort_list_asc(student_obj)
+
+for i in range(len(student_obj_sort)):
+    print(student_obj_sort[i])
+
+print('\nWorker list sort by money per hour descending\n')
+# Display worker after sort
+worker_obj_sort = sort_list_desc(worker_obj)
+
+for i in range(len(worker_obj_sort)):
+    print(worker_obj_sort[i])
+
+# Merge 2 lists
+merge_obj = []
+for i in range(len(student_obj)):
+    merge_obj.append(student_obj[i])
+for i in range(len(worker_obj)):
+    merge_obj.append(worker_obj[i])
+
+# # Display merge list before sorting
+# for i in range(len(merge_obj)):
+#     print(merge_obj[i])
+
+print('\nMerge list sort by firstname, lastname ascending\n')
+# Display merge list after sorting
+merge_obj_sort = sort_merge_asc(merge_obj)
+
+for i in range(len(merge_obj_sort)):
+    print(merge_obj_sort[i])
+
+#completed
